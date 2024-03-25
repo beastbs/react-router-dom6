@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {useUser} from '@hook/useUser';
 import {useForm} from '@hook/useForm';
@@ -5,8 +6,12 @@ import TextField from '@common/form/TextField';
 import Button from '@common/Button';
 
 export default function NewUser(){
+   const navigate = useNavigate();
+   const { state } = useLocation();
    const { handleAddUser } = useUser();
    const [data, handleChange, setData] = useForm();
+
+   console.log('STATE', state);
 
    const handleSubmit = (event) => {
       event.preventDefault();
@@ -21,6 +26,7 @@ export default function NewUser(){
          pauseOnHover: true
       })
       setData({})
+      navigate("/users")
    }
    
    return (

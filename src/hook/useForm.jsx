@@ -3,18 +3,16 @@ import { useState } from 'react';
 export function useForm(initialState = {}){
 	const [data, setData] = useState(initialState);
 
-	const handleChange = (event) => {
-		event.preventDefault();
-
+	const onChange = (target) => {
 		setData(prevState => ({
 			...prevState,
-			[event.target.name]: event.target.value
+			[target.name]: target.value
 		}))
 	}
 
 	return [
 		data,
-		handleChange,
+		onChange,
 		setData
 	]
 }

@@ -1,17 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@hook/useAuth';
 import { useForm } from '@hook/useForm';
 import TextField from '@common/form/TextField';
 import Button from '@common/Button';
 
 export default function Login(){
-	const { signin } = useAuth();
 	const navigate = useNavigate();
-	const [data, handleChange] = useForm();
+	const location = useLocation();
+	const { signin } = useAuth();
+	const [data, onChange] = useForm();
+
+	const fromPage = location.state?.from?.pathname || '/';
+	console.log(location);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		signin(data, () => navigate('/users/new', {replace: true}))
+		signin(data, () => navigate(fromPage, {state: data, replace: true}))
 	}
 	
 	return (
@@ -23,7 +27,7 @@ export default function Login(){
 				name='name'
 				placeholder="Enter your name"
 				value={data?.name || ""}
-				onChange={handleChange}
+				onChange={onChange}
 			/>
 			<TextField
 				label='Email'
@@ -31,7 +35,7 @@ export default function Login(){
 				name='email'
 				placeholder="Enter your email"
 				value={data?.email || ""}
-				onChange={handleChange}
+				onChange={onChange}
 			/>
 			<TextField
 				label='Password'
@@ -39,7 +43,7 @@ export default function Login(){
 				name='password'
 				placeholder="Enter your Password"
 				value={data?.password || ""}
-				onChange={handleChange}
+				onChange={onChange}
 			/>
 			<Button
 				width='w-1/3'

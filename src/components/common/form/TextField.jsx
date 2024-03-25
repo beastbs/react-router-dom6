@@ -9,6 +9,10 @@ export default function TextField({label, type = 'text', name, onChange, value =
       setShowPassword(prevState => !prevState);
    }
 
+   const handleChange = ({target}) => {
+      onChange({name: target.name, value: target.value})
+   }
+
    return (
       <div className="mb-[5px]">
          <label className="block mb-[2px]" htmlFor={name}>{label}:</label>
@@ -17,7 +21,7 @@ export default function TextField({label, type = 'text', name, onChange, value =
                className="w-full px-3 py-2 text-xl outline-none rounded"
                type={showPassword ? "text" : type}
                name={name}
-               onChange={onChange}
+               onChange={handleChange}
                required
                placeholder={placeholder}
                value={value}
